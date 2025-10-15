@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>netzkarte.app</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src='modules/maplibre-gl.js'></script>
+    <link href='modules/maplibre-gl.css' rel='stylesheet' />
+    <script src="modules/pmtiles.js"></script>
+    <link rel="stylesheet" href="map/map-styles.css">
+    <link rel="stylesheet" href="styles.css">
+
+
+    <script src="https://unpkg.com/@stadiamaps/maplibre-search-box/dist/maplibre-search-box.umd.js"></script>
+    <link
+      href="modules/maplibre-search-box.css"
+      rel="stylesheet"
+    />
+    
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <div id="map"></div>
+    
+    <script src="map/map-script.js"></script>
+    <button id="toggle-btn">☰ Legende</button>
+
+    <div id="legend">
+        <div class="legend-title">
+            Mobilfunknetzausbau <br> in Deutschland
+        </div>
+        <div class="legend-brand-title">
+            <span style="color:#ff0000;">n</span><span style="color:#ff3f00;">e</span><span style="color:#ff7f00;">t</span><span style="color:#ffbf00;">z</span><span style="color:#ffff00;">k</span><span style="color:#bffe00;">a</span><span style="color:#7ffd00;">r</span><span style="color:#3ffc00;">t</span><span style="color:#00fc00;">e</span><span style="color:#00bd3f;">.</span><span style="color:#007e7e;">a</span><span style="color:#003fbd;">p</span><span style="color:#0000fc;">p</span></span>
+        </div>
+
+
+        Diese Karte zeigt alle Mobilfunkmasten in Deutschland an. <br> <br>
+
+        Differenziert wird zwischen den drei großen Mobilfunknetzbetreibern <span class="telekom_span">Telekom</span>, <span class="vodafone_span">Vodafone</span> und <span class="telefonica_span">o2</span>. <br><br>
+        Der jeweilige Betreiber ist wie folgt farblich markiert: <br>
+
+        <div class="legend-item">
+        <div class="legend-color" style="background:#ff0000"></div>
+        Vodafone.de (auch
+        <div class="legend-color-min" style="background:#ffff00"></div>
+        <div class="legend-color-min" style="background:#ff00ff"></div>
+        <div class="legend-color-min" style="background:#ffffff"></div>
+        )
+        </div>
+
+        <div class="legend-item">
+        <div class="legend-color" style="background:#00ff00"></div> 
+        Deutsche Telekom (auch
+        <div class="legend-color-min" style="background:#ffff00"></div>
+        <div class="legend-color-min" style="background:#00ffff"></div>
+        <div class="legend-color-min" style="background:#ffffff"></div>
+        )
+        </div>
+
+        <div class="legend-item">
+        <div class="legend-color" style="background:#0000ff"></div> 
+        Telefonica / o2 (auch
+        <div class="legend-color-min" style="background:#ff00ff"></div>
+        <div class="legend-color-min" style="background:#00ffff"></div>
+        <div class="legend-color-min" style="background:#ffffff"></div>
+        )
+        </div>
+
+        Die <b>Deutsche Telekom</b> ist als <span class="telekom_span">grün</span> dargestellt, <br>
+        da die Farbe <span style="color:#ff00ff;">Magenta</span> keine <span class="vodafone_span">R</span><span class="telekom_span">G</span><span class="telefonica_span">B</span>-Grundfarbe ist. <br>
+        In dieser Grafik werden die Farbkombinationen der Netzbetreiber dargestellt:
+
+        <img src="images/mixing-help.webp" alt="netzkarte.app Logo als WebP" style="width: 90%; margin-top: 20px;">
+    </div>
+    <script src="script.js"></script>
+    
+</body>
+
+</html>

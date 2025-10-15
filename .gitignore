@@ -1,0 +1,26 @@
+.venv/
+
+archive/
+assets/
+.vite/
+serve/data/
+
+# venv stuff
+pyvenv.cfg
+pip-selfcheck.json
+venv
+.venv
+Pipfile*
+share/*
+/Scripts/
+__pycache__
+bin
+
+# Visual Studio Code
+.vscode/*
+!.vscode/cSpell.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+.env
+
+desktop.ini
