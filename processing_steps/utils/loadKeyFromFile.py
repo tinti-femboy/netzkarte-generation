@@ -1,6 +1,6 @@
 def get_key():
     search_str = 'c=CryptoJS.enc.Utf8.parse(\"'
-    with open('../assets/jscontent.js', 'r') as f:
+    with open('./assets/jscontent.js', 'r') as f:
         content = f.read()
 
     idx = content.find(search_str)

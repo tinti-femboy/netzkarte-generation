@@ -1,7 +1,7 @@
 import os
 import pickle
 
-def write_cookies_to_file(cookies, path='../assets/initial-cookies.pkl'):
+def write_cookies_to_file(cookies, path='./assets/initial-cookies.pkl'):
     try:
         with open(path, 'wb') as f:
             pickle.dump(cookies, f)
@@ -10,7 +10,7 @@ def write_cookies_to_file(cookies, path='../assets/initial-cookies.pkl'):
         print(f"An error occurred while saving cookies: {e}")
     
     
-def load_cookies_from_file(path='../assets/initial-cookies.pkl'):
+def load_cookies_from_file(path='./assets/initial-cookies.pkl'):
     try:
         with open(path, 'rb') as f:
             cookies = pickle.load(f)  # Convert string representation of dict back to dict
