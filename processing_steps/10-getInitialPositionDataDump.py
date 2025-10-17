@@ -80,13 +80,9 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
 
 
         try:
-            # Send the POST request with the JSON payload, headers, and cookies
             response = requests.post(url, json=payload, headers=headers, cookies=cookies)
-            print(response.status_code)
+            tqdm.print(response.status_code)
             if response.status_code == 200:
-                # print("Request successful. Response:")
-                # print(response.json())
-                # print("response end")
 
                 data = response.json()
                 if data == {'d': []}:
@@ -94,7 +90,7 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
                     print("no data")
                 result_string = data["d"]["Result"]
                 # print(f"\nExtracted Base64 string: {result_string}")
-                print(f"\nDecypted string: {decryptBase64String(result_string)}")
+                tqdm.print(f"\nDecypted string: {decryptBase64String(result_string)}")
                 return(decryptBase64String(result_string))
 
             else:
@@ -125,11 +121,11 @@ def get_initial_position_data_dump(downloadType="GetStandorteFreigabe"):
         total_iterations = (stoplngrad - startlngrad) * 10 * (stopbngrad - startbngrad) * 5
         with tqdm(total=total_iterations) as pbar:
             for lngrad in range((stoplngrad - startlngrad) * 10):
-                for bngrad in range((stopbngrad - startbngrad) * 5):
+                for bngrad in range((stopbngrad - startbngrad) * 10):
                     sued = lngrad * 0.1 + startlngrad
-                    west = bngrad * 0.2 + startbngrad
+                    west = bngrad * 0.1 + startbngrad
                     nord = sued + 0.1
-                    ost = west + 0.2
+                    ost = west + 0.1
                     myfile.write(f"sued: {sued}, west: {west}, nord: {nord}, ost: {ost}\n ")
                     nextToWrite = f"{scrapeStandorteFreigabe(sued, west, nord, ost, downloadType, cookies=cookies_to_use)}\n"
                     myfile.write(nextToWrite)
