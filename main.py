@@ -15,7 +15,6 @@ required_packages = [
     "pycryptodome",
     "httpx",
     "beautifulsoup4",
-    "gdal",
     "shapely",
     "pyproj",
 ]
