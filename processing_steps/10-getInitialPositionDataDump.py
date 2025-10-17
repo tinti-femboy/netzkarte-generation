@@ -81,7 +81,7 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
 
         try:
             response = requests.post(url, json=payload, headers=headers, cookies=cookies)
-            tqdm.write(response.status_code)
+            tqdm.write(str(response.status_code))
             if response.status_code == 200:
 
                 data = response.json()
