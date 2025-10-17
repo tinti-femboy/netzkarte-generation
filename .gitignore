@@ -1,5 +1,6 @@
 .venv/
 
+temp.*
 archive/
 assets/
 .vite/
@@ -14,7 +15,7 @@ Pipfile*
 share/*
 /Scripts/
 __pycache__
-bin
+
 
 # Visual Studio Code
 .vscode/*
