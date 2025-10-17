@@ -81,7 +81,7 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
 
         try:
             response = requests.post(url, json=payload, headers=headers, cookies=cookies)
-            tqdm.print(response.status_code)
+            tqdm.write(response.status_code)
             if response.status_code == 200:
 
                 data = response.json()
@@ -90,7 +90,7 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
                     print("no data")
                 result_string = data["d"]["Result"]
                 # print(f"\nExtracted Base64 string: {result_string}")
-                tqdm.print(f"\nDecypted string: {decryptBase64String(result_string)}")
+                tqdm.write(f"\nDecypted string: {decryptBase64String(result_string)}")
                 return(decryptBase64String(result_string))
 
             else:
