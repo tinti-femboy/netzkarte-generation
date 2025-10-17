@@ -2,8 +2,8 @@ import subprocess
 import logging
 from processing_steps.utils.checkDependencies import *
 
-startStep = 64
-stopStep = 128
+startStep = 0
+stopStep = 15
 
 processing_range = range(startStep, stopStep+1)
 
@@ -53,7 +53,7 @@ for script in scripts:
 
     logging.info(f"Running {script}...")
     try:
-        subprocess.run(["python", f"scripts/{script}"], check=True)
+        subprocess.run(["python", f"./{script}"], check=True)
     except subprocess.CalledProcessError as e:
         logging.error(f"Error in {script}: {e}")
         break
