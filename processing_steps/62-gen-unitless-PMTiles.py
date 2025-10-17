@@ -6,9 +6,9 @@ DATA_NAME = "unitless_towers"
 
 # --- CONFIGURATION ---
 # Make sure these filenames match your actual files.
-INPUT_GEOJSON = f"../assets/{DATA_NAME}.geojson"
-MBTILES_OUTPUT = f"../assets/{DATA_NAME}.mbtiles"
-PMTILES_OUTPUT = f"../serve/data/{DATA_NAME}.pmtiles"
+INPUT_GEOJSON = f"./assets/{DATA_NAME}.geojson"
+MBTILES_OUTPUT = f"./assets/{DATA_NAME}.mbtiles"
+PMTILES_OUTPUT = f"./serve/data/{DATA_NAME}.pmtiles"
 
 # Name of the data layer inside the tileset. You'll use this in your front-end code.
 LAYER_NAME = DATA_NAME

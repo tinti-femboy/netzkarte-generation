@@ -4,9 +4,9 @@ from pathlib import Path
 
 # --- CONFIGURATION ---
 # Make sure these filenames match your actual files.
-INPUT_GEOJSON = "../assets/all_cells.geojson"
-MBTILES_OUTPUT = "../assets/all_cells.mbtiles"
-PMTILES_OUTPUT = "../serve/data/all_cells.pmtiles"
+INPUT_GEOJSON = "./assets/all_cells.geojson"
+MBTILES_OUTPUT = "./assets/all_cells.mbtiles"
+PMTILES_OUTPUT = "./serve/data/all_cells.pmtiles"
 
 # Name of the data layer inside the tileset. You'll use this in your front-end code.
 LAYER_NAME = "cells"

@@ -12,8 +12,8 @@ HEADERS = {
     "Referer": "https://www.bundesnetzagentur.de/DE/Vportal/TK/Funktechnik/EMF/start.html",
     "X-Requested-With": "XMLHttpRequest"
 }
-OUTPUT_DIR = "../assets/httpCellInfoDumps/"
-JSON_FILE_PATH = "../assets/cell_towers.json"
+OUTPUT_DIR = "./assets/httpCellInfoDumps/"
+JSON_FILE_PATH = "./assets/cell_towers.json"
 BASE_URL = "https://www.bundesnetzagentur.de/emf-karte/hf.aspx?fid="
 # --- Async Network Functions ---
 async def send_netz_request(client: httpx.AsyncClient, url: str, payload: Any) -> Optional[str]:

@@ -45,12 +45,12 @@ def generate_key_from_session():
         'Cache-Control': 'no-cache'
     }
 
-    filename = '../assets/jscontent.js'
+    filename = './assets/jscontent.js'
 
     try:
 
         print(f"Requesting data from {url}...")
-        response = requests.get(url, params=params, headers=headers, cookies=load_cookies_from_file("../assets/initial-cookies.pkl"))
+        response = requests.get(url, params=params, headers=headers, cookies=load_cookies_from_file("./assets/initial-cookies.pkl"))
         response.raise_for_status()
         print("Request successful. Status code:", response.status_code)
 
@@ -58,7 +58,7 @@ def generate_key_from_session():
             f.write(response.text)
 
         print(f"Successfully downloaded and saved content to '{filename}'")
-        write_cookies_to_file(response.cookies, "../assets/final-cookies.pkl")
+        write_cookies_to_file(response.cookies, "./assets/final-cookies.pkl")
         print(response.cookies)
 
     except requests.exceptions.RequestException as e:

@@ -8,8 +8,8 @@ import math
 from multiprocessing import Pool, cpu_count
 
 # --- CONFIGURATION ---
-DB_FILE = '../assets/cell_towers.db'
-OUTPUT_GEOJSON = '../assets/all_cells.geojson'
+DB_FILE = './assets/cell_towers.db'
+OUTPUT_GEOJSON = './assets/all_cells.geojson'
 RADIUS_METERS = 200  # 10 km
 SECTOR_ANGLE_DEGREES = 30
 

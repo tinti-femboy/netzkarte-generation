@@ -40,7 +40,7 @@ def decryptBase64String(encoded_string):
 
 
 
-def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFreigabe", cookies=load_cookies_from_file("../assets/final-cookies.pkl")):
+def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFreigabe", cookies=load_cookies_from_file("./assets/final-cookies.pkl")):
     # Define the URL and payload
     url = f"https://www.bundesnetzagentur.de/emf-karte/Standortservice.asmx/{downloadType}"
     payload = {
@@ -114,9 +114,9 @@ def get_initial_position_data_dump(downloadType="GetStandorteFreigabe"):
     stoplngrad = 56
     stopbngrad = 16
 
-    with open("../assets/smallcell-standortdumps.txt", "a") as myfile:
+    with open("./assets/smallcell-standortdumps.txt", "a") as myfile:
         myfile.write(f"\nrun from {datetime.now()}\n")
-        cookies_to_use = load_cookies_from_file("../assets/final-cookies.pkl")
+        cookies_to_use = load_cookies_from_file("./assets/final-cookies.pkl")
         myfile.write(f"\n using Cookies {cookies_to_use}")
     # trying from 52 6 to 50 9
 

@@ -1,6 +1,6 @@
 import sqlite3
 
-DATABASE_PATH = '../assets/cell_towers.db'
+DATABASE_PATH = './assets/cell_towers.db'
 
 # Connect to the database
 conn = sqlite3.connect(DATABASE_PATH)

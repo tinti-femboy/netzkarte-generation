@@ -50,8 +50,8 @@ def print_progress(current, total, bar_length=40):
         print()
 
 if __name__ == "__main__":
-    db_file = "../assets/cell_towers.db"
-    geojson_file = "../assets/small_cells.geojson"
+    db_file = "./assets/cell_towers.db"
+    geojson_file = "./assets/small_cells.geojson"
 
     print(f"Reading coordinates from {db_file}...")
     coords = read_lat_lng_from_db(db_file)

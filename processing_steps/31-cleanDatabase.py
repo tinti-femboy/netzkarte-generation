@@ -13,7 +13,7 @@ def cleanup_database():
     Args:
         db_path: The file path to the SQLite database.
     """
-    db_path = '../assets/cell_towers.db'
+    db_path = './assets/cell_towers.db'
     conn = None
     try:
         # Connect to the database, failing if the file does not exist.

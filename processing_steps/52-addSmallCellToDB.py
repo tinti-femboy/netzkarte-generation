@@ -37,8 +37,8 @@ def insert_data(db_file, data):
     conn.close()
 
 if __name__ == "__main__":
-    json_file = "../assets/small_cell_towers.json"
-    db_file = "../assets/cell_towers.db"
+    json_file = "./assets/small_cell_towers.json"
+    db_file = "./assets/cell_towers.db"
     data = load_json(json_file)
     insert_data(db_file, data)
     print("Data imported successfully.")

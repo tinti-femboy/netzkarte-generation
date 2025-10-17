@@ -34,7 +34,7 @@ def parse_cell_tower_data(data_string):
 
 
 def structure_initial_position_data():
-    file_name = "../assets/standortdumps.txt"
+    file_name = "./assets/standortdumps.txt"
     try:
         with open(file_name, 'r', encoding='utf-8') as file:
             data_dump = file.read()
@@ -50,7 +50,7 @@ def structure_initial_position_data():
                 print("No cell tower data was found in the file.")
 
         # Add a new section to save the data to a JSON file
-        output_file_name = "../assets/cell_towers.json"
+        output_file_name = "./assets/cell_towers.json"
         with open(output_file_name, 'w', encoding='utf-8') as json_file:
             json.dump(all_towers, json_file, indent=4)
 

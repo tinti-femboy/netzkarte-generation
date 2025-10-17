@@ -9,9 +9,9 @@ from tqdm import tqdm
 # IMPORTANT INSTALL LXML: pip install lxml
 
 # --- Configuration ---
-DB_FILE = '../assets/cell_towers.db'
-JSON_FILE = '../assets/cell_towers.json'
-HTML_DIR = '../assets/httpCellInfoDumps/'
+DB_FILE = './assets/cell_towers.db'
+JSON_FILE = './assets/cell_towers.json'
+HTML_DIR = './assets/httpCellInfoDumps/'
 
 def create_database_schema(db_file):
     """Creates the database and tables if they don't exist."""
