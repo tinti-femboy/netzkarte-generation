@@ -53,7 +53,7 @@ for script in scripts:
 
     logging.info(f"Running {script}...")
     try:
-        subprocess.run([".venv/bin/python3", f"./{script}"], check=True)
+        subprocess.run([".venv/bin/python3", f"{script}"], check=True)
     except subprocess.CalledProcessError as e:
         logging.error(f"Error in {script}: {e}")
         break
