@@ -16,7 +16,7 @@
 
     "pmtiles-basemap": {
       "type": "vector",
-      "url": "http://192.168.178.2:8003/data/pmtiles.json"
+      "url": "http://basemap.netzkarte.app/data/pmtiles.json"
     },
 
 
