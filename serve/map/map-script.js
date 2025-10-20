@@ -37,8 +37,21 @@ map.addControl(
 
 map.addControl(searchbar, "top-left");
 
+const cachedTowers = new Map();
+map.on('mouseenter', 'cells-layer', async (e) => {
+            
+            hoveredTowerFid = e.features[0].properties.tower_fid
+            if (!cachedTowers.has(hoveredTowerFid)) {
+                let apiTowerDetailsResponse = await fetch("https://api.netzkarte.app/towers/" + hoveredTowerFid)
+                apiTowerDetails = await apiTowerDetailsResponse.json()
+                cachedTowers.set(hoveredTowerFid, apiTowerDetails);
+            } else {
+                apiTowerDetails = cachedTowers.get(hoveredTowerFid)
+            }
 
-map.on('mouseenter', 'cells-layer', (e) => {
+
+
+
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -53,18 +66,30 @@ map.on('mouseenter', 'cells-layer', (e) => {
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
+            
+            // 1und1 Zusatztext
+            
+            if(apiTowerDetails.provider_1und1){
+                Text1und1 = '<span class="einsundeins-notice"> ✓ auch <span class="einsundeins_span">1&1</span> (5G) </span><br>'
+            } else {
+                Text1und1 = ""
+            }
+            
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
             let popupMessage = "<b>" + e.features.length + 
-                ( e.features[0].properties.provider === 't'   ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span> in diese Richtung'
-                : e.features[0].properties.provider === 'v'   ? '</b> Mobilfunksender der <span class="vodafone_span">Vodafone</span> in diese Richtung'
-                : e.features[0].properties.provider === 'b'   ? '</b> Mobilfunksender der <span class="telefonica_span">Telefonica/o2</span> in diese Richtung'
-                : e.features[0].properties.provider === 'tv'  ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span> und <span class="vodafone_span">Vodafone</span> in diese Richtung'
-                : e.features[0].properties.provider === 'tb'  ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span> und <span class="telefonica_span">o2</span> in diese Richtung'
-                : e.features[0].properties.provider === 'vb'  ? '</b> Mobilfunksender der <span class="vodafone_span">Vodafone</span> und <span class="telefonica_span">o2</span> in diese Richtung'
-                : e.features[0].properties.provider === 'tvb' ? '</b> Mobilfunksender <b><i>aller drei <span class="colorize_fun"><span style="color:#00fc00;">M</span><span style="color:#00fd61;">o</span><span style="color:#00fec2;">b</span><span style="color:#00efef;">i</span><span style="color:#00c6c6;">l</span><span style="color:#009d9d;">f</span><span style="color:#0069b1;">u</span><span style="color:#0031d9;">n</span><span style="color:#0700f7;">k</span><span style="color:#4200d2;">n</span><span style="color:#7e00ae;">e</span><span style="color:#ae00ae;">t</span><span style="color:#d400d4;">z</span><span style="color:#fa00fa;">b</span><span style="color:#ff00aa;">e</span><span style="color:#ff0048;">t</span><span style="color:#fe0c00;">r</span><span style="color:#fd3c00;">e</span><span style="color:#fc6c00;">i</span><span style="color:#fc9d00;">b</span><span style="color:#fdce00;">e</span><span style="color:#ffff00;">r</span></span></b></i> in diese Richtung'
-                : '</b> Mobilfunksender eines unbekannten Netzbetreibers in diese Richtung')
+                ( e.features[0].properties.provider === 't'   ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span>'
+                : e.features[0].properties.provider === 'v'   ? '</b> Mobilfunksender der <span class="vodafone_span">Vodafone</span>'
+                : e.features[0].properties.provider === 'b'   ? '</b> Mobilfunksender der <span class="telefonica_span">Telefonica/o2</span>'
+                : e.features[0].properties.provider === 'tv'  ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span> und <span class="vodafone_span">Vodafone</span>'
+                : e.features[0].properties.provider === 'tb'  ? '</b> Mobilfunksender der <span class="telekom_span">Telekom</span> und <span class="telefonica_span">o2</span>'
+                : e.features[0].properties.provider === 'vb'  ? '</b> Mobilfunksender der <span class="vodafone_span">Vodafone</span> und <span class="telefonica_span">o2</span>'
+                : e.features[0].properties.provider === 'tvb' ? '</b> Mobilfunksender <b><i>aller drei <span class="rainbow"><span style="color:#00fc00;">M</span><span style="color:#00fd61;">o</span><span style="color:#00fec2;">b</span><span style="color:#00efef;">i</span><span style="color:#00c6c6;">l</span><span style="color:#009d9d;">f</span><span style="color:#0069b1;">u</span><span style="color:#0031d9;">n</span><span style="color:#0700f7;">k</span><span style="color:#4200d2;">n</span><span style="color:#7e00ae;">e</span><span style="color:#ae00ae;">t</span><span style="color:#d400d4;">z</span><span style="color:#fa00fa;">b</span><span style="color:#ff00aa;">e</span><span style="color:#ff0048;">t</span><span style="color:#fe0c00;">r</span><span style="color:#fd3c00;">e</span><span style="color:#fc6c00;">i</span><span style="color:#fc9d00;">b</span><span style="color:#fdce00;">e</span><span style="color:#ffff00;">r</span></span></b></i>'
+                : '</b> Mobilfunksender eines unbekannten Netzbetreibers') + " in diese Richtung. <br>"
+                + "<span class=\"tooltip-summary\">Sendeeinheiten insgesamt: <b>" + apiTowerDetails.units.length + "</b></span><br>"
+                + Text1und1 
+                + "<div class=\"tooltip-footer\"> Datum: " + apiTowerDetails.creation_date + " · fID: " + apiTowerDetails.fid + "<br>"
+
+                + "</div>"
             popup.setLngLat(coordinates[0][0]).setHTML(popupMessage).addTo(map);
         });
 
