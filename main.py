@@ -23,6 +23,8 @@ check_dependencies(required_packages)
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+
+
 # Define script order
 scripts = [
     "processing_steps/00-generateSession.py",                     
