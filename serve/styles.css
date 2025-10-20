@@ -6,6 +6,7 @@ body {
   overflow: hidden;
   accent-color: #6000b3;
   color-scheme: dark;
+  font-family: "Poppins", sans-serif;
 }
 
 /* Sidebar (legend) styles */
@@ -101,9 +102,56 @@ body {
   margin-right: 2px;
   border-radius: 3px;
 }
+/**
+* Navbar Style Settings
+*/
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #202020;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {background-color: #6b0046;}
+
+ul.topnav li .navbar-logo {
+  font-size: 30px;
+  padding: 4px 16px;
+  font-weight: 200;
+}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}
+  
 
 
 
+@media screen and (max-width: 400px) {
+  ul.sidenav li a {
+    text-align: center;
+    float: none;
+  }
+}
+
+/**
+* Font Style Settings
+*/
 .poppins-thin {
   font-family: "Poppins", sans-serif;
   font-weight: 100;

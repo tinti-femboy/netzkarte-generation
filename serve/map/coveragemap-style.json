@@ -114,7 +114,10 @@
       "type": "line",
       "source": "pmtiles-basemap",
       "source-layer": "water",
-      "paint": { "line-color": "rgba(20,100,172,0.9)" }
+      "paint": { 
+        "line-color": "rgba(20,100,172,0.9)",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 6, 1, 14, 4, 16, 8, 20, 32]
+       }
     },
     {
       "id": "roads-primary",
@@ -124,8 +127,8 @@
 
       "paint": {
         "line-color": "rgba(255,255,255,0.9)",
-        "line-width": 2,
-        "line-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 14, 0.02]
+        "line-width": ["interpolate", ["linear"], ["zoom"], 6, 2, 14, 2, 16, 4, 18, 8],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0.1, 14, 0.02, 16, 0.5]
       }
     },
     {
