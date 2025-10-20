@@ -16,7 +16,7 @@
 
     "pmtiles-basemap": {
       "type": "vector",
-      "url": "http://basemap.netzkarte.app/data/pmtiles.json"
+      "url": "https://basemap.netzkarte.app/data/pmtiles.json"
     },
 
 
