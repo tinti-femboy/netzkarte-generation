@@ -3,15 +3,10 @@ import sys
 
 def cleanup_database():
     """
-    Performs a two-step cleanup on the SQLite database.
-
     1. Deletes towers that ONLY have sending units with the cell_type
        'Sonstige Funkanlage'. The CASCADE constraint deletes their cells.
     2. Deletes any remaining 'Sonstige Funkanlage' cells from towers that
        also contained other cell types.
-
-    Args:
-        db_path: The file path to the SQLite database.
     """
     db_path = './assets/cell_towers.db'
     conn = None
@@ -46,8 +41,7 @@ def cleanup_database():
         # --- Step 2: Delete all remaining 'Sonstige Funkanlage' cells ---
         print("\n--- Step 2: Deleting remaining 'Sonstige Funkanlage' cells ---")
 
-        # This simple query removes any cells of the specified type that survived
-        # Step 1. These cells belong to towers that also have other cell types.
+        # These cells belong to towers that also have other cell types.
         delete_remaining_cells_query = "DELETE FROM sending_units WHERE cell_type = 'Sonstige Funkanlage';"
         cursor.execute(delete_remaining_cells_query)
         deleted_cells_count = cursor.rowcount
@@ -57,8 +51,6 @@ def cleanup_database():
         else:
             print("No remaining 'Sonstige Funkanlage' cells were found to delete.")
 
-        # --- Commit Transaction ---
-        # All operations were successful, so we commit them to the database.
         conn.commit()
         print("\nCleanup complete. All changes have been committed.")
 
@@ -69,7 +61,6 @@ def cleanup_database():
     except Exception as e:
         print(f"An unexpected error occurred: {e}", file=sys.stderr)
         if conn:
-            # If an error occurs, roll back any changes from this session.
             conn.rollback()
             print("Transaction has been rolled back.", file=sys.stderr)
         sys.exit(1)

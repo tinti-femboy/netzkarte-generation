@@ -2,11 +2,11 @@ import sqlite3
 
 DATABASE_PATH = './assets/cell_towers.db'
 
-# Connect to the database
+ 
 conn = sqlite3.connect(DATABASE_PATH)
 cursor = conn.cursor()
 
-# Create the new table (adjust columns as needed)
+ 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS unitless_towers (
     fid INTEGER PRIMARY KEY,
@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS unitless_towers (
 );
 """)
 
-# Query to find db1 rows without db2 matches
 query = """
 SELECT towers.*
 FROM towers
@@ -29,17 +28,15 @@ WHERE sending_units.tower_fid IS NULL;
 """
 cursor.execute(query)
 
-# Fetch and insert in batches
-batch_size = 20000
+batch_size = 20000 # batch thing not working yet so just enter a huge number for now
 while True:
     rows = cursor.fetchmany(batch_size)
     if not rows:
-        break  # No more rows
+        break
     cursor.executemany("""
     INSERT INTO unitless_towers (fid, latitude, longitude, creation_date, provider_telekom, provider_vodafone, provider_telefonica, provider_1und1)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     """, rows)
-    conn.commit()  # Commit after each batch
+    conn.commit()
 
-# Close the connection
 conn.close()

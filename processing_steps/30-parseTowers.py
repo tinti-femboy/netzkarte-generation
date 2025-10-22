@@ -8,13 +8,11 @@ import multiprocessing
 from tqdm import tqdm
 # IMPORTANT INSTALL LXML: pip install lxml
 
-# --- Configuration ---
 DB_FILE = './assets/cell_towers.db'
 JSON_FILE = './assets/cell_towers.json'
 HTML_DIR = './assets/httpCellInfoDumps/'
 
 def create_database_schema(db_file):
-    """Creates the database and tables if they don't exist."""
     with sqlite3.connect(db_file) as conn:
         cursor = conn.cursor()
         cursor.executescript("""
@@ -44,7 +42,6 @@ def create_database_schema(db_file):
         print(f"Database '{db_file}' schema is ready and tables have been cleared.")
 
 def clean_numeric_value(value_str):
-    """Converts a string with a comma decimal separator to a float."""
     if value_str:
         try:
             return float(value_str.strip().replace(',', '.'))
@@ -143,11 +140,9 @@ def main():
     all_sending_units = []
     all_safety_zones = []
 
-    # The 'with' statement ensures the pool is properly closed
+
     with multiprocessing.Pool() as pool:
-        # tqdm provides a progress bar
         # imap_unordered is memory-efficient and returns results as they are completed
-        
         results = list(tqdm(pool.imap_unordered(process_tower, towers_json), total=len(towers_json)))
 
     # 4. Collect results from all processes
@@ -165,7 +160,6 @@ def main():
     with sqlite3.connect(DB_FILE) as conn:
         cursor = conn.cursor()
         try:
-            # Use executemany for highly efficient batch inserts
             cursor.executemany("INSERT INTO towers VALUES (?, ?, ?, ?, ?, ?, ?, ?)", all_towers)
             print(f"Inserted {cursor.rowcount} rows into 'towers'.")
 
@@ -175,7 +169,6 @@ def main():
             cursor.executemany("INSERT INTO safety_zones (tower_fid, zone_name, zone_safety_distance, vertical_safety_distance, zone_height) VALUES (?, ?, ?, ?, ?)", all_safety_zones)
             print(f"Inserted {cursor.rowcount} rows into 'safety_zones'.")
 
-            # The 'with' statement automatically commits on success or rolls back on error
             print("Database transaction committed successfully.")
         except sqlite3.Error as e:
             print(f"Database error during batch insert: {e}")

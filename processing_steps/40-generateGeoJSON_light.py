@@ -7,10 +7,10 @@ from tqdm import tqdm
 import math
 from multiprocessing import Pool, cpu_count
 
-# --- CONFIGURATION ---
+
 DB_FILE = './assets/cell_towers.db'
 OUTPUT_GEOJSON = './assets/all_cells.geojson'
-RADIUS_METERS = 200  # 10 km
+RADIUS_METERS = 200
 SECTOR_ANGLE_DEGREES = 30
 
 def create_sector(lon, lat, azimuth_deg, radius_m=RADIUS_METERS, angle_deg=SECTOR_ANGLE_DEGREES):
@@ -39,10 +39,7 @@ def create_sector(lon, lat, azimuth_deg, radius_m=RADIUS_METERS, angle_deg=SECTO
     return Polygon(projected_points)
 
 def process_row(row_tuple):
-    """
-    Worker function to process a single row from the database data.
-    (This function also remains the same)
-    """
+    
     index, row = row_tuple
 
     provider_key = ""
@@ -79,10 +76,9 @@ def process_row(row_tuple):
     }
     return feature
 
+
 def main():
-    """
-    Main function with optimized streaming GeoJSON writer.
-    """
+    
     print(f"Connecting to database: {DB_FILE}")
     conn = sqlite3.connect(DB_FILE)
     df = pd.read_sql_query("SELECT towers.longitude AS longitude, towers.latitude AS latitude, mount_direction, provider_telekom, provider_vodafone, provider_telefonica, tower_fid FROM sending_units INNER JOIN towers WHERE towers.fid = sending_units.tower_fid ORDER BY towers.fid ASC", conn)
@@ -96,29 +92,21 @@ def main():
     print(f"Starting parallel processing and streaming write with {num_processes} cores...")
 
     features_written = 0
-    # The 'with' statements ensure everything is closed properly
+    
     with open(OUTPUT_GEOJSON, 'w') as f, Pool(processes=num_processes) as pool:
-        # 1. Write the opening part of the GeoJSON file
+        
         f.write('{"type": "FeatureCollection", "features": [')
-
-        # Use pool.imap for memory-efficient iteration. It yields results as they complete.
-        # Wrap the iterator with tqdm to create the progress bar.
+        
         results_iterator = pool.imap(process_row, df.iterrows())
-
-        # 2. Iterate through results and write each feature directly to the file
+        
         for feature in tqdm(results_iterator, total=total_records, desc="Processing and Writing Features"):
             if feature is None:
                 continue
-
-            # Add a comma before each feature, except for the very first one
             if features_written > 0:
                 f.write(',')
-
-            # Use json.dump to write the single feature object. This is fast for small objects.
             json.dump(feature, f)
             features_written += 1
-
-        # 3. Write the closing part of the GeoJSON file
+        
         f.write(']}')
 
     print(f"\nSuccessfully generated and wrote {features_written} features.")

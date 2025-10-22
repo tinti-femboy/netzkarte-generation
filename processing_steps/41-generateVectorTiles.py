@@ -2,23 +2,19 @@ import subprocess
 import sys
 from pathlib import Path
 
-# --- CONFIGURATION ---
-# Make sure these filenames match your actual files.
+
 INPUT_GEOJSON = "./assets/all_cells.geojson"
 MBTILES_OUTPUT = "./assets/all_cells.mbtiles"
 PMTILES_OUTPUT = "./serve/data/all_cells.pmtiles"
 
-# Name of the data layer inside the tileset. You'll use this in your front-end code.
+
 LAYER_NAME = "cells"
 
 def run_command(command):
-    """
-    Runs a command in the shell and streams its output.
-    Raises an exception if the command fails.
-    """
-    print(f"\n▶️  Executing command: {' '.join(command)}")
 
-    # Using Popen to stream output in real-time
+    print(f"\n Executing command: {' '.join(command)}")
+
+
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
@@ -28,40 +24,36 @@ def run_command(command):
         universal_newlines=True,
     )
 
-    # Read and print output line by line
+
     for line in process.stdout:
         print(line, end='')
 
     process.wait() # Wait for the command to complete
 
     if process.returncode != 0:
-        print(f"\n❌ ERROR: Command failed with exit code {process.returncode}")
+        print(f"\nERROR: Command failed with exit code {process.returncode}")
         raise subprocess.CalledProcessError(process.returncode, command)
 
-    print(f"✅ Command completed successfully.")
+    print(f"Command completed successfully.")
 
 def main():
-    """
-    Main function to orchestrate the tile generation process.
-    """
     input_path = Path(INPUT_GEOJSON)
     mbtiles_path = Path(MBTILES_OUTPUT)
     pmtiles_path = Path(PMTILES_OUTPUT)
 
-    # --- 1. Check for the input file ---
     if not input_path.exists():
         print(f"❌ ERROR: Input file not found at '{input_path}'")
-        print("Please run the 7 script first.")
+        print("Please run the 40 script first.")
         sys.exit(1)
 
-    # --- 2. Construct and run the Tippecanoe command ---
+
     tippecanoe_command = [
         "tippecanoe",
-        "-o", str(mbtiles_path),      # Output file
-        "-l", LAYER_NAME,            # Set the layer name
+        "-o", str(mbtiles_path),     # Output file
+        "-l", LAYER_NAME,            # layer name
         "--force",                   # Overwrite the output file if it exists
         "-zg",                       # Guess max zoom level automatically
-        "--drop-densest-as-needed",  # Crucial for performance
+        "--drop-densest-as-needed",  # for performance
         str(input_path)              # Input file
     ]
 
@@ -90,7 +82,6 @@ def main():
         print("Please ensure the 'pmtiles' utility is installed (e.g., via npm).")
         sys.exit(1)
 
-    # --- 4. Clean up the intermediate MBTiles file ---
     try:
         print(f"\n--- Step 3 of 3: Cleaning up intermediate file ---")
         mbtiles_path.unlink()
@@ -98,7 +89,6 @@ def main():
     except OSError as e:
         print(f"⚠️ Warning: Could not delete intermediate file '{mbtiles_path}'. Error: {e}")
 
-    # --- Final Success Message ---
     print("\n🎉 --- Vector Tile Generation Complete! --- 🎉")
     print(f"Your final, web-ready tile file is: {pmtiles_path}")
     print("You can now upload this file to a static web host and use it in your MapLibre GL JS website.")

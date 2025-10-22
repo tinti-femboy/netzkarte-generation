@@ -17,6 +17,7 @@ required_packages = [
     "beautifulsoup4",
     "shapely",
     "pyproj",
+    "lxml",
 ]
 check_dependencies(required_packages)
 

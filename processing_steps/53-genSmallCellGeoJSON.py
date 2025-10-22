@@ -6,23 +6,21 @@ from shapely.geometry import Point, mapping
 from shapely.ops import transform
 import pyproj
 
-# Define the WGS84 CRS once to be reused.
+
 PROJ_WGS84 = pyproj.CRS('EPSG:4326')
 
 def create_circle(lon, lat, radius_m=30):
     """
     Creates a GeoJSON polygon for a circle with a given radius in meters.
     """
-    # Create a local Azimuthal Equidistant projection for the specific point.
-    # This minimizes distortion for the buffer operation.
+    
+    # ChatGPT Magic Circle generation
     aeqd_proj = f"+proj=aeqd +lat_0={lat} +lon_0={lon} +x_0=0 +y_0=0"
     proj_aeqd = pyproj.CRS(aeqd_proj)
 
-    # Create transformers for this specific projection
     transformer_to_aeqd = pyproj.Transformer.from_crs(PROJ_WGS84, proj_aeqd, always_xy=True)
     transformer_to_wgs84 = pyproj.Transformer.from_crs(proj_aeqd, PROJ_WGS84, always_xy=True)
 
-    # Project the point to the AEQD CRS, buffer it, then project back to WGS84.
     point = Point(lon, lat)
     point_in_aeqd = transform(transformer_to_aeqd.transform, point)
     buffer_in_aeqd = point_in_aeqd.buffer(radius_m)
@@ -31,8 +29,6 @@ def create_circle(lon, lat, radius_m=30):
     return mapping(buffer_in_wgs84)
 
 def read_lat_lng_from_db(db_file):
-    """Reads coordinates from the SQLite database."""
-    # Use a 'with' statement for safer connection handling
     with sqlite3.connect(db_file) as conn:
         cur = conn.cursor()
         cur.execute("SELECT Lat, Lng FROM small_cells")
@@ -40,7 +36,6 @@ def read_lat_lng_from_db(db_file):
     return rows
 
 def print_progress(current, total, bar_length=40):
-    """Displays a progress bar in the console."""
     percent = float(current) / total
     arrow = '-' * int(round(percent * bar_length) - 1) + '>'
     spaces = ' ' * (bar_length - len(arrow))
@@ -62,23 +57,20 @@ if __name__ == "__main__":
     for i, (lat, lon) in enumerate(coords, 1):
         circle_geom = create_circle(lon, lat)
 
-        # Create the feature, but without the styling properties
         feature = {
             "type": "Feature",
             "geometry": circle_geom,
-            "properties": {} # Keep properties minimal for vector tiles
+            "properties": {}
         }
         features.append(feature)
         print_progress(i, total)
 
-    # Create the final GeoJSON FeatureCollection structure
     feature_collection = {
         "type": "FeatureCollection",
         "features": features
     }
 
     print(f"Writing GeoJSON to {geojson_file}...")
-    # Write the entire object to the file at once
     with open(geojson_file, 'w', encoding='utf-8') as f:
         json.dump(feature_collection, f)
 

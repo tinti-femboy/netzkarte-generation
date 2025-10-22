@@ -1,4 +1,8 @@
 def get_key():
+
+    # script searches the downloaded jscontent.js (Which contains our key!!) 
+    # for the hard-coded key. this changes every session
+
     search_str = 'c=CryptoJS.enc.Utf8.parse(\"'
     with open('./assets/jscontent.js', 'r') as f:
         content = f.read()
