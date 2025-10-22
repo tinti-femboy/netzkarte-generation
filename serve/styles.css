@@ -7,6 +7,24 @@ body {
   accent-color: #6000b3;
   color-scheme: dark;
   font-family: "Poppins", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#map { 
+
+  width: 100%; 
+  flex-grow: 1;
+  height: 90vh;
+}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #202020;
 }
 
 /* Sidebar (legend) styles */
@@ -33,16 +51,18 @@ body {
 
 #toggle-btn {
   position: absolute;
-  top: 50px;
+  top: 50vh;
   right: 10px;
   z-index: 10;
   background: rgba(32, 32, 32, 0.80);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 100px;
   padding: 8px 12px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   cursor: pointer;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px
 }
 
 @keyframes glowing {
@@ -50,7 +70,7 @@ body {
     background: rgba(32, 32, 32, 0.80);
   }
   50% {
-    background: rgba(128, 128, 128, 0.8);
+    background: rgba(128, 128, 255, 0.8);
   }
   100% {
     background: rgba(32, 32, 32, 0.80);
@@ -58,7 +78,7 @@ body {
 }
 
 #toggle-btn {
-  animation: glowing 400ms 2;
+  animation: glowing 400ms 3;
 }
 
 #toggle-btn:hover {
@@ -86,7 +106,8 @@ body {
 .legend-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .legend-color {
@@ -105,20 +126,15 @@ body {
 /**
 * Navbar Style Settings
 */
-ul.topnav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #202020;
-}
+
 
 ul.topnav li {float: left;}
 
 ul.topnav li a {
   display: block;
   text-align: center;
-  padding: 14px 16px;
+  font-size: 4vh;
+  padding: 2vh 16px;
   text-decoration: none;
 }
 
@@ -127,8 +143,8 @@ ul.topnav li a:hover:not(.active) {background-color: #111;}
 ul.topnav li a.active {background-color: #6b0046;}
 
 ul.topnav li .navbar-logo {
-  font-size: 30px;
-  padding: 4px 16px;
+  font-size: 6vh;
+  padding: 0vh 16px;
   font-weight: 200;
 }
 
@@ -147,37 +163,4 @@ ul.topnav li.right {float: right;}
     text-align: center;
     float: none;
   }
-}
-
-/**
-* Font Style Settings
-*/
-.poppins-thin {
-  font-family: "Poppins", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.poppins-light {
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.poppins-semibold {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.poppins-light-italic {
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.poppins-semibold-italic {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  font-style: italic;
 }
