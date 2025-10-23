@@ -42,7 +42,6 @@
     <li class="right"><a href="about">Impressum</a></li>
     </ul>
 
-
     <div id="map"></div>
     
     <script src="map/map-script.js"></script>
@@ -97,6 +96,13 @@
         <br> <br> <br> <br>
     </div>
     <script src="script.js"></script>
+
+    <!-- Do not send statistics if doNotTrack Header is enabled -->
+    <script>
+    window.goatcounter = {
+        no_onload: ('doNotTrack' in navigator && navigator.doNotTrack === '1'),
+    };
+    </script>
     <script data-goatcounter="https://stats.tinti.pet/count" async src="https://stats.tinti.pet/count.js"></script>
 </body>
 
