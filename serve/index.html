@@ -30,7 +30,7 @@
 
 <body>
 
-    <ul class="topnav">
+    <ul class="topnav" id="navbar">
     <li><a class="navbar-logo" href="https://netzkarte.app/">
         
         <span style="color:#ff00ff;">n</span><span style="color:#ff00e9;">e</span><span style="color:#ff00d4;">t</span><span style="color:#ff00bf;">z</span><span style="color:#ff00aa;">k</span><span style="color:#fe0094;">a</span><span style="color:#ff007f;">r</span><span style="color:#ff006a;">t</span><span style="color:#ff0055;">e</span><span style="color:#ff003f;">.</span><span style="color:#ff002a;">a</span><span style="color:#ff0015;">p</span><span style="color:#ff0000;">p</span></span>
@@ -39,8 +39,15 @@
     <li><a class="active" href="home">Info</a></li>
     <li><a href="mailto:tinti@femboy.now">Kontakt</a></li>
     <li><a href="https://github.com/tinti-femboy">GitHub</a></li>
-    <li class="right"><a href="about">Impressum</a></li>
+    <li class="right"><a href="about">About</a></li>
+    <li class="icon"><a href="javascript:void(0);" onclick="toggleNav()">&#9776;</a></li>
     </ul>
+
+    <script>
+        function toggleNav() {
+        document.getElementById("navbar").classList.toggle("responsive");
+        }
+    </script>
 
     <div id="map"></div>
     
