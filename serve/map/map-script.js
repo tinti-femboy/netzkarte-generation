@@ -87,8 +87,7 @@ map.on('mouseenter', 'cells-layer', async (e) => {
                 : '</b> Mobilfunksender eines unbekannten Netzbetreibers') + " in diese Richtung. <br>"
                 + "<span class=\"tooltip-summary\">Sendeeinheiten insgesamt: <b>" + apiTowerDetails.units.length + "</b></span><br>"
                 + Text1und1 
-                + "<div class=\"tooltip-footer\"> Datum: " + apiTowerDetails.creation_date + " · fID: " + apiTowerDetails.fid + "<br>"
-
+                + "<div class=\"tooltip-footer\"> Datum: " + apiTowerDetails.creation_date + ' · <a href="https://www.bundesnetzagentur.de/emf-karte/hf.aspx?fid=' + apiTowerDetails.fid + '" target="_blank" rel="noopener noreferrer"> fID: ' + apiTowerDetails.fid + "<br>"
                 + "</div>"
             popup.setLngLat(coordinates[0][0]).setHTML(popupMessage).addTo(map);
         });
