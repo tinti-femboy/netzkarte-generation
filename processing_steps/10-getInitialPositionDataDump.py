@@ -115,7 +115,6 @@ def get_initial_position_data_dump(downloadType="GetStandorteFreigabe"):
                     myfile.write(f"sued: {sued}, west: {west}, nord: {nord}, ost: {ost}\n ")
                     nextToWrite = f"{scrapeStandorteFreigabe(sued, west, nord, ost, downloadType, cookies=cookies_to_use)}\n"
                     myfile.write(nextToWrite)
-                    time.sleep(0.1)
                     pbar.update(1)  
 
 if __name__ == "__main__":

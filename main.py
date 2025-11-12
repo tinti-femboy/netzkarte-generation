@@ -2,7 +2,7 @@ import subprocess
 import logging
 from processing_steps.utils.checkDependencies import *
 
-startStep = 0
+startStep = 8
 stopStep = 15
 
 processing_range = range(startStep, stopStep+1)
@@ -45,6 +45,8 @@ scripts = [
     "processing_steps/61-add-unitless-to-geoJSON.py",
     "processing_steps/62-gen-unitless-PMTiles.py",
 ]
+
+subprocess.run(["mkdir", "assets"])
 
 i = 0
 for script in scripts:
