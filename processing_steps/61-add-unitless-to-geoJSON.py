@@ -32,7 +32,7 @@ def read_from_db(db_file):
      
     with sqlite3.connect(db_file) as conn:
         cur = conn.cursor()
-        cur.execute("SELECT Latitude, Longitude, provider_telekom, provider_telefonica, provider_vodafone FROM unitless_towers")
+        cur.execute("SELECT Latitude, Longitude, provider_telekom, provider_vodafone, provider_telefonica, fid FROM unitless_towers")
         rows = cur.fetchall()
     return rows
 
@@ -56,18 +56,23 @@ if __name__ == "__main__":
     print(f"Found {total} coordinates. Generating features...")
 
     features = []
-    for i, (lat, lon, provider_telekom, provider_vodafone, provider_telefonica) in enumerate(db_rows, 1):
+    for i, (lat, lon, provider_telekom, provider_vodafone, provider_telefonica, fid) in enumerate(db_rows, 1):
         circle_geom = create_circle(lon, lat)
 
         provider_key = ""
         if provider_telekom: provider_key += "t"
         if provider_vodafone: provider_key += "v"
         if provider_telefonica: provider_key += "b"
+
+        # fid = row.get('fid', None)
+        print(f"Processing fid: {fid}")
+
         feature = {
             "type": "Feature",
             "geometry": circle_geom,
             "properties": {
-                "provider": provider_key
+                "provider": provider_key,
+                "tower_fid": fid
             }  
         }
         features.append(feature)

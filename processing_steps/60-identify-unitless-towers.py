@@ -34,7 +34,7 @@ while True:
     if not rows:
         break
     cursor.executemany("""
-    INSERT INTO unitless_towers (fid, latitude, longitude, creation_date, provider_telekom, provider_vodafone, provider_telefonica, provider_1und1)
+    INSERT OR REPLACE INTO unitless_towers (fid, latitude, longitude, creation_date, provider_telekom, provider_vodafone, provider_telefonica, provider_1und1)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     """, rows)
     conn.commit()
