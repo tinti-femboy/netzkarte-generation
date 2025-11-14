@@ -144,7 +144,7 @@ ul.topnav li a:hover:not(.active) {background-color: #111;}
 ul.topnav li a.active {background-color: #6b0046;}
 
 ul.topnav li .navbar-logo {
-  font-size: 6vh;
+  font-size: 6px;
   padding: 0vh 16px;
   font-weight: 200;
 }

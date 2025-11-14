@@ -2,7 +2,7 @@ import subprocess
 import logging
 from processing_steps.utils.checkDependencies import *
 
-startStep = 8
+startStep = 13
 stopStep = 15
 
 processing_range = range(startStep, stopStep+1)

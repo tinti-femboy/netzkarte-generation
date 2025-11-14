@@ -40,6 +40,8 @@ map.addControl(searchbar, "top-left");
 const cachedTowers = new Map();
 map.on('mouseenter', 'cells-layer', async (e) => {
             
+
+            // Call API for advanced tower tooltip infos
             hoveredTowerFid = e.features[0].properties.tower_fid
             if (!cachedTowers.has(hoveredTowerFid)) {
                 let apiTowerDetailsResponse = await fetch("https://api.netzkarte.app/towers/" + hoveredTowerFid)
@@ -48,9 +50,6 @@ map.on('mouseenter', 'cells-layer', async (e) => {
             } else {
                 apiTowerDetails = cachedTowers.get(hoveredTowerFid)
             }
-
-
-
 
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
@@ -97,7 +96,17 @@ map.on('mouseenter', 'cells-layer', async (e) => {
 //     popup.remove();
 // });
 
-map.on('mouseenter', 'unitless-towers', (e) => {
+map.on('mouseenter', 'unitless-towers', async (e) => {
+
+            hoveredTowerFid = e.features[0].properties.tower_fid
+            if (!cachedTowers.has(hoveredTowerFid)) {
+                let apiTowerDetailsResponse = await fetch("https://api.netzkarte.app/towers/" + hoveredTowerFid)
+                apiTowerDetails = await apiTowerDetailsResponse.json()
+                cachedTowers.set(hoveredTowerFid, apiTowerDetails);
+            } else {
+                apiTowerDetails = cachedTowers.get(hoveredTowerFid)
+            }
+
             // Change the cursor style as a UI indicator.
             map.getCanvas().style.cursor = 'pointer';
 
@@ -112,8 +121,15 @@ map.on('mouseenter', 'unitless-towers', (e) => {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
 
-            // Populate the popup and set its coordinates
-            // based on the feature found.
+
+            // 1und1 Zusatztext
+            if(apiTowerDetails.provider_1und1){
+                Text1und1 = '<span class="einsundeins-notice"> ✓ auch <span class="einsundeins_span">1&1</span> (5G) </span><br>'
+            } else {
+                Text1und1 = ""
+            }
+
+            console.log()
             let popupMessage = "Unbekannter " +
                 ( e.features[0].properties.provider === 't' ? 'Mobilfunksender der <span class="telekom_span">Telekom</span>' 
                 : e.features[0].properties.provider === 'v' ? 'Mobilfunksender der <span class="vodafone_span">Vodafone</span>'
@@ -126,17 +142,15 @@ map.on('mouseenter', 'unitless-towers', (e) => {
                 : e.features[0].properties.provider === 'tvb' ? 'Mobilfunksender von <b><i>allen drei <span class="colorize_fun"><span style="color:#00fc00;">M</span><span style="color:#00fd61;">o</span><span style="color:#00fec2;">b</span><span style="color:#00efef;">i</span><span style="color:#00c6c6;">l</span><span style="color:#009d9d;">f</span><span style="color:#0069b1;">u</span><span style="color:#0031d9;">n</span><span style="color:#0700f7;">k</span><span style="color:#4200d2;">n</span><span style="color:#7e00ae;">e</span><span style="color:#ae00ae;">t</span><span style="color:#d400d4;">z</span><span style="color:#fa00fa;">b</span><span style="color:#ff00aa;">e</span><span style="color:#ff0048;">t</span><span style="color:#fe0c00;">r</span><span style="color:#fd3c00;">e</span><span style="color:#fc6c00;">i</span><span style="color:#fc9d00;">b</span><span style="color:#fdce00;">e</span><span style="color:#ffff00;">rn</span></span></b></i>'
 
                 : 'Funksender von unbekanntem Netzbetreiber')
+                + "<br>"
+                + Text1und1 
+                + "<div class=\"tooltip-footer\"> Datum: " + apiTowerDetails.creation_date + ' · <a href="https://www.bundesnetzagentur.de/emf-karte/hf.aspx?fid=' + apiTowerDetails.fid + '" target="_blank" rel="noopener noreferrer"> fID: ' + apiTowerDetails.fid + "<br>"
+                + "</div>"
             popup.setLngLat(coordinates[0][0]).setHTML(popupMessage).addTo(map);
         });
 
-// map.on('mouseleave', 'unitless_towers', () => {
-//     map.getCanvas().style.cursor = '';
-//     popup.remove();
-// });
 
 map.on('mouseenter', 'small-cells-polygons', (e) => {
-            // Change the cursor style as a UI indicator.
-
             map.getCanvas().style.cursor = 'pointer';
 
 
@@ -156,10 +170,16 @@ map.on('mouseenter', 'small-cells-polygons', (e) => {
             popup.setLngLat(coordinates[0][0]).setHTML(popupMessage).addTo(map);
         });
 
-// map.on('mouseleave', 'small-cells-polygons', () => {
-//     map.getCanvas().style.cursor = '';
-//     popup.remove();
-// });
+
+        map.on('mouseleave', 'cells-layer', () => {
+            map.getCanvas().style.cursor = '';
+        });
+        map.on('mouseleave', 'unitless-towers', () => {
+            map.getCanvas().style.cursor = '';
+        });
+        map.on('mouseleave', 'small-cells-polygons', () => {
+            map.getCanvas().style.cursor = '';
+        });
 
 
 
