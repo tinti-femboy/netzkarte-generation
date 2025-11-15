@@ -1,14 +1,20 @@
 import sqlite3
 import sys
 
+import os
+
 def cleanup_database():
+
+    os.remove("./assets/standortdumps.txt")
+    os.rename('./assets/httpCellInfoDumps/', './assets/old-httpCellInfoDumps/')
+
     """
     1. Deletes towers that ONLY have sending units with the cell_type
        'Sonstige Funkanlage'. The CASCADE constraint deletes their cells.
     2. Deletes any remaining 'Sonstige Funkanlage' cells from towers that
        also contained other cell types.
     """
-    db_path = './assets/cell_towers.db'
+    db_path = "./assets/cell_towers.db"
     conn = None
     try:
         # Connect to the database, failing if the file does not exist.

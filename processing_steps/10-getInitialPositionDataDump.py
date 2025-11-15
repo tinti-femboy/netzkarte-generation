@@ -2,6 +2,8 @@ import requests
 import time
 import base64
 
+import os # to rename old db
+
 from tqdm import tqdm
 
 from utils.cookieManager import *
@@ -88,9 +90,12 @@ def scrapeStandorteFreigabe(sued, west, nord, ost, downloadType="GetStandorteFre
             print(f"An error occurred: {e}")
 
 def get_initial_position_data_dump(downloadType="GetStandorteFreigabe"):
+    try:
+        os.rename("./assets/cell_towers.db", "./assets/cell_towers_old.db")
+    except FileNotFoundError:
+        print("not backing up database, because it doesn't exist")
+
     startlngrad = 47
-
-
     startbngrad = 5
 
     stoplngrad = 56
@@ -104,7 +109,7 @@ def get_initial_position_data_dump(downloadType="GetStandorteFreigabe"):
 
         
     
-        total_iterations = (stoplngrad - startlngrad) * 10 * (stopbngrad - startbngrad) * 5
+        total_iterations = (stoplngrad - startlngrad) * 10 * (stopbngrad - startbngrad) * 10
         with tqdm(total=total_iterations) as pbar:
             for lngrad in range((stoplngrad - startlngrad) * 10):
                 for bngrad in range((stopbngrad - startbngrad) * 10):

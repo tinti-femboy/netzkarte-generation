@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 DATABASE_PATH = './assets/cell_towers.db'
 
@@ -40,3 +41,4 @@ while True:
     conn.commit()
 
 conn.close()
+os.remove("./assets/smallcell-standortdumps.txt")
