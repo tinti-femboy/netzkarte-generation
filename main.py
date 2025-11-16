@@ -2,6 +2,7 @@ import subprocess
 import logging
 from processing_steps.utils.checkDependencies import *
 
+# start from 0 for full code
 startStep = 13
 stopStep = 15
 

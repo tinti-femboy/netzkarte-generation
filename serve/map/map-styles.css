@@ -42,7 +42,27 @@
 }
 
 .einsundeins_span {
-    color: #3333FF; /* Telefonica blue */
+    color: #3333FF;
+    font-weight: 600;
+}
+
+.light_telekom_span {
+    color: #67FF67; /* Telekom magenta */
+    font-weight: 600;
+}
+
+.light_vodafone_span {
+    color: #FF6767; /* Vodafone red */
+    font-weight: 600;
+}
+
+.light_telefonica_span {
+    color: #6767FF; /* Telefonica blue */
+    font-weight: 600;
+}
+
+.light_einsundeins_span {
+    color: #7676FF;
     font-weight: 600;
 }
 
@@ -63,7 +83,9 @@
   color: lightgray
 }
 
-
+.signalIcon{
+  vertical-align: middle;
+}
 
 .maplibregl-ctrl {
 
@@ -148,4 +170,16 @@
 
 .maplibre-search-box .results .result {
 	border-bottom: 1px dashed skyblue !important;
+}
+
+#receptionBubble {
+  position: absolute;
+  pointer-events: none; /* don't block mouse */
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transform: translateY(10px); /* hover below cursor */
+  white-space: nowrap;
 }
