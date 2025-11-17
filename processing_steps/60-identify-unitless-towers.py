@@ -22,14 +22,16 @@ CREATE TABLE IF NOT EXISTS unitless_towers (
 """)
 
 query = """
-SELECT towers.*
+SELECT DISTINCT towers.*
 FROM towers
-LEFT JOIN sending_units ON towers.fid = sending_units.tower_fid
-WHERE sending_units.tower_fid IS NULL;
+LEFT JOIN sending_units 
+    ON towers.fid = sending_units.tower_fid
+WHERE sending_units.tower_fid IS NULL
+   OR sending_units.mount_direction IS NULL;
 """
 cursor.execute(query)
 
-batch_size = 20000 # batch thing not working yet so just enter a huge number for now
+batch_size = 100000 # batch thing not working yet so just enter a huge number for now
 while True:
     rows = cursor.fetchmany(batch_size)
     if not rows:
@@ -41,4 +43,3 @@ while True:
     conn.commit()
 
 conn.close()
-os.remove("./assets/smallcell-standortdumps.txt")

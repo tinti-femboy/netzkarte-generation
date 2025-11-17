@@ -1,6 +1,7 @@
 import json
 import sqlite3
 import sys
+import os
 
 def load_json(json_file):
     with open(json_file, 'r', encoding='utf-8') as f:
@@ -40,3 +41,7 @@ if __name__ == "__main__":
     data = load_json(json_file)
     insert_data(db_file, data)
     print("Data imported successfully.")
+    try: 
+        os.remove("./assets/smallcell-standortdumps.txt")
+    except FileNotFoundError:
+        print("not removing old small cell standort dumps because they dont exist")

@@ -3,8 +3,8 @@ import logging
 from processing_steps.utils.checkDependencies import *
 
 # start from 0 for full code
-startStep = 16
-stopStep = 17
+startStep = 13
+stopStep = 19
 
 processing_range = range(startStep, stopStep+1)
 
@@ -45,6 +45,8 @@ scripts = [
     "processing_steps/62-gen-unitless-PMTiles.py",
     "processing_steps/70-CityView-generateGeoJSON.py",
     "processing_steps/71-CityView-generateVectorTiles.py",
+    "processing_steps/75-CityView-unitless-GeoJSON.py",
+    "processing_steps/76-CityView-unitless-VectorTiles.py",
 ]
 
 subprocess.run(["mkdir", "assets"])

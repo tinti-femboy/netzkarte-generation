@@ -4,9 +4,14 @@ import sys
 import os
 
 def cleanup_database():
-
-    os.remove("./assets/standortdumps.txt")
-    os.rename('./assets/httpCellInfoDumps/', './assets/old-httpCellInfoDumps/')
+    try:
+        os.remove("./assets/standortdumps.txt")
+    except FileNotFoundError:
+        print("not deleting old standortdumps, because they dont exist")
+    try:
+        os.rename('./assets/httpCellInfoDumps/', './assets/old-httpCellInfoDumps/')
+    except FileNotFoundError:
+        print("not deleting old httpCellInfoDumps, because they dont exist")
 
     """
     1. Deletes towers that ONLY have sending units with the cell_type
