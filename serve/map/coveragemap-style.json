@@ -25,6 +25,11 @@
       "url": "pmtiles://data/all_cells.pmtiles"
     },
 
+    "cityview-cells-source": {
+      "type": "vector",
+      "url": "pmtiles://data/city_cells.pmtiles"
+    },
+
     "small-cells-source": {
       "type": "vector",
       "url": "pmtiles://data/small_cells.pmtiles"
@@ -41,7 +46,8 @@
       "type": "raster",
       "source": "coverage-map-source",
       "paint": {
-        "raster-opacity": 0.85
+
+        "raster-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0.85, 14.3, 0.4]
       }
     },
 
@@ -72,6 +78,8 @@
         }
     },
 
+    
+    
     {
         "id": "cells-layer",
         "type": "fill",
@@ -92,7 +100,31 @@
                 "tvb", "#FFFFFF", 
                 "#CCCCCC"
             ],
-            "fill-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0, 14, 1]
+            "fill-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0, 14, 0.3, 14.3, 0]
+        }
+    },
+
+    {
+        "id": "cityview-cells-layer",
+        "type": "fill",
+        "source": "cityview-cells-source",
+        "source-layer": "city_cells",
+        "paint": {
+            "fill-color": [
+                "match",
+                ["get", "provider"],
+                "t", "#00FF00", 
+                "v", "#FF0000", 
+                "b", "#0000FF", 
+ 
+                "tv", "#FFFF00",
+                "tb", "#00FFFF",
+                "vb", "#FF00FF", 
+    
+                "tvb", "#FFFFFF", 
+                "#CCCCCC"
+            ],
+            "fill-opacity": ["interpolate", ["linear"], ["zoom"], 14, 0, 14.3, 0.3]
         }
     },
 
@@ -107,7 +139,6 @@
             "fill-outline-color": "#000000"
         }
     },
-
 
     {
       "id": "water-fill",

@@ -3,8 +3,8 @@ import logging
 from processing_steps.utils.checkDependencies import *
 
 # start from 0 for full code
-startStep = 13
-stopStep = 15
+startStep = 16
+stopStep = 17
 
 processing_range = range(startStep, stopStep+1)
 
@@ -25,26 +25,26 @@ check_dependencies(required_packages)
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
-
-
 # Define script order
 scripts = [
-    "processing_steps/00-generateSession.py",                     
-    "processing_steps/10-getInitialPositionDataDump.py",           
-    "processing_steps/11-structureInitialPositionData.py",        
-    "processing_steps/20-downloadCellsFromTowers.py",        
-    "processing_steps/30-parseTowers.py",                           
-    "processing_steps/31-cleanDatabase.py",
-    "processing_steps/40-generateGeoJSON_light.py",
+    "processing_steps/00-generateSession.py",                   # step 0   
+    "processing_steps/10-getInitialPositionDataDump.py",        # step 1
+    "processing_steps/11-structureInitialPositionData.py",      # step 2
+    "processing_steps/20-downloadCellsFromTowers.py",           # step 3
+    "processing_steps/30-parseTowers.py",                       # step 4
+    "processing_steps/31-cleanDatabase.py",                     # step 5
+    "processing_steps/40-generateGeoJSON.py",                   # step 6
     "processing_steps/41-generateVectorTiles.py",
     "processing_steps/50-getSmallCellPosDump.py",
     "processing_steps/51-structSmallCellDump.py",
-    "processing_steps/52-addSmallCellToDB.py",
+    "processing_steps/52-addSmallCellToDB.py",                  # step 10
     "processing_steps/53-genSmallCellGeoJSON.py",
     "processing_steps/54-genSmallCellVectorTiles.py",
     "processing_steps/60-identify-unitless-towers.py",
     "processing_steps/61-add-unitless-to-geoJSON.py",
     "processing_steps/62-gen-unitless-PMTiles.py",
+    "processing_steps/70-CityView-generateGeoJSON.py",
+    "processing_steps/71-CityView-generateVectorTiles.py",
 ]
 
 subprocess.run(["mkdir", "assets"])
