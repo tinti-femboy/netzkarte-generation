@@ -71,7 +71,7 @@
 }
 
 .tooltip-footer {
-    color: lightslategray; /* Telefonica blue */
+    color: lightslategray;
     font-weight: 500;
     font-size: 10px;
     text-align: end;
@@ -91,7 +91,6 @@
 
   border-radius: 4px;
   box-shadow: 0 1px 4px rgb(0, 0, 0);
-  margin: 10px;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   color: white;

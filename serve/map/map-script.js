@@ -303,7 +303,6 @@ map.on('mousemove', async (e) => {
             bubble.style.display = "none";
             return;
         }
-            
     
     const lon = e.lngLat.lng;
     const lat = e.lngLat.lat;
@@ -322,14 +321,7 @@ map.on('mousemove', async (e) => {
     const pixelY = Math.floor(worldY % 256);
 
     // --- Build tile URL ---
-    const url = `https://tiles.netzkarte.app/${zoom}/${xTile}/${yTile}.png`;
-
-//   console.clear();
-//   console.log("Mousemove event:");
-//   console.log("WGS84:", e.lngLat);
-//   console.log("Tile indices:", {x: xTile, y: yTile, z: zoom});
-//   console.log("Pixel in tile:", {px: pixelX, py: pixelY});
-//   console.log("Tile URL:", url);
+    const url = `https://tiles.netzkarte.app/${zoom}/${xTile}/${yTile}.webp`;
 
     pixelData = await getPixelValue(url, pixelX, pixelY);
 
@@ -344,14 +336,6 @@ map.on('mousemove', async (e) => {
     bubble.style.display = "block";
     bubble.style.left = e.originalEvent.pageX + "px";
     bubble.style.top = e.originalEvent.pageY + "px";
-
-
-    // // Example usage
-    // getPixelValue("https://tiles.netzkarte.app/13/4354/2764.png", 120, 80).then(color => {
-    //   console.log(`Pixel at (120,80): R=${color.r}, G=${color.g}, B=${color.b}, A=${color.a}`);
-    // }).catch(err => {
-    //   console.error("Error loading image:", err);
-    // });
 
 });
 

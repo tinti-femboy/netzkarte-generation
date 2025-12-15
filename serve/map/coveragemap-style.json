@@ -6,7 +6,7 @@
     "coverage-map-source": {
       "type": "raster",
       "tiles": [
-        "https://tiles.netzkarte.app/{z}/{x}/{y}.png"
+        "https://tiles.netzkarte.app/{z}/{x}/{y}.webp"
       ],
       "tileSize": 256,
       "maxzoom": 13,
