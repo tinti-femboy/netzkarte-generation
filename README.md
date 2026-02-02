@@ -3,7 +3,7 @@
 > [!WARNING]
 > Not affiliated with BNetzA, use at your own risk!
 
-> [!INFO]
+> [!NOTE]
 > Contains AI-generated code. Thrown together by me, a human :3
 ## The Data:
 #### What you'll get:
@@ -26,7 +26,7 @@
 ## How to run this
 ### Step 1: Create a `venv` and install dependencies
 
-> [!INFO]
+> [!NOTE]
 > This requires Python 3.11 or higher.
 > This is only needed if you want to host your own version of netzkarte.app
 
