@@ -47,7 +47,7 @@ def main():
      
     tippecanoe_command = [
         "tippecanoe",
-        "-o", str(mbtiles_path),       
+        "-o", str(pmtiles_path),       
         "-l", LAYER_NAME,             
         "--force",                    
         "-zg",                        
@@ -56,35 +56,14 @@ def main():
     ]
 
     try:
-        print("--- Step 1 of 3: Running Tippecanoe to generate MBTiles ---")
+        print("Running Tippecanoe to generate PMTiles")
         print("This may take a significant amount of time and CPU...")
         run_command(tippecanoe_command)
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("\nAn error occurred while running Tippecanoe.")
-        print("Please ensure Tippecanoe is installed and accessible in your WSL environment.")
+        print("Please ensure Tippecanoe is installed and accessible in your (WS)Linux environment.")
         sys.exit(1)
      
-    pmtiles_command = [
-        "./bin/pmtiles",
-        "convert",
-        str(mbtiles_path),
-        str(pmtiles_path)
-    ]
-
-    try:
-        print("\n--- Step 2 of 3: Converting MBTiles to PMTiles ---")
-        run_command(pmtiles_command)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("\nAn error occurred while running pmtiles.")
-        print("Please ensure the 'pmtiles' utility is installed (e.g., via npm).")
-        sys.exit(1)
-    
-    try:
-        print(f"\n--- Step 3 of 3: Cleaning up intermediate file ---")
-        mbtiles_path.unlink()
-        print(f"Successfully deleted temporary file: '{mbtiles_path}'")
-    except OSError as e:
-        print(f"Warning: Could not delete intermediate file '{mbtiles_path}'. Error: {e}")
 
     print("\n--- Vector Tile Generation Complete! --- 🎉")
     print(f"Your final, web-ready tile file is: {pmtiles_path}")

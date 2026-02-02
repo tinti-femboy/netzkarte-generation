@@ -3,7 +3,7 @@ import logging
 from processing_steps.utils.checkDependencies import *
 
 # start from 0 for full code
-startStep = 13
+startStep = 0
 stopStep = 19
 
 processing_range = range(startStep, stopStep+1)

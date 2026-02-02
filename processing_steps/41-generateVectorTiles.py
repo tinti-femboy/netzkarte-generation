@@ -1,12 +1,11 @@
 import subprocess
 import sys
+import os
 from pathlib import Path
 
 
 INPUT_GEOJSON = "./assets/all_cells.geojson"
-MBTILES_OUTPUT = "./assets/all_cells.mbtiles"
 PMTILES_OUTPUT = "./serve/data/all_cells.pmtiles"
-
 
 LAYER_NAME = "cells"
 
@@ -38,8 +37,8 @@ def run_command(command):
 
 def main():
     input_path = Path(INPUT_GEOJSON)
-    mbtiles_path = Path(MBTILES_OUTPUT)
     pmtiles_path = Path(PMTILES_OUTPUT)
+    os.makedirs(pmtiles_path.parent, exist_ok=True)
 
     if not input_path.exists():
         print(f"❌ ERROR: Input file not found at '{input_path}'")
@@ -49,7 +48,7 @@ def main():
 
     tippecanoe_command = [
         "tippecanoe",
-        "-o", str(mbtiles_path),     # Output file
+        "-o", str(pmtiles_path),     # Output file
         "-l", LAYER_NAME,            # layer name
         "--force",                   # Overwrite the output file if it exists
         "-zg",                       # Guess max zoom level automatically
@@ -58,36 +57,36 @@ def main():
     ]
 
     try:
-        print("--- Step 1 of 3: Running Tippecanoe to generate MBTiles ---")
+        print("Running Tippecanoe to generate MBTiles")
         print("This may take a significant amount of time and CPU...")
         run_command(tippecanoe_command)
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("\nAn error occurred while running Tippecanoe.")
-        print("Please ensure Tippecanoe is installed and accessible in your WSL environment.")
+        print("Please ensure Tippecanoe is installed and accessible in your (WS)Linux environment.")
         sys.exit(1)
 
 
-    pmtiles_command = [
-        "bin/pmtiles",  # Adjust this path if pmtiles is installed elsewhere
-        "convert",
-        str(mbtiles_path),
-        str(pmtiles_path)
-    ]
+    # pmtiles_command = [
+    #     "bin/pmtiles",  # Adjust this path if pmtiles is installed elsewhere
+    #     "convert",
+    #     str(mbtiles_path),
+    #     str(pmtiles_path)
+    # ]
 
-    try:
-        print("\n--- Step 2 of 3: Converting MBTiles to PMTiles ---")
-        run_command(pmtiles_command)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print("\nAn error occurred while running pmtiles.")
-        print("Please ensure the 'pmtiles' utility is installed (e.g., via npm).")
-        sys.exit(1)
+    # try:
+    #     print("\n--- Step 2 of 3: Converting MBTiles to PMTiles ---")
+    #     run_command(pmtiles_command)
+    # except (subprocess.CalledProcessError, FileNotFoundError):
+    #     print("\nAn error occurred while running pmtiles.")
+    #     print("Please ensure the 'pmtiles' utility is installed (e.g., via npm).")
+    #     sys.exit(1)
 
-    try:
-        print(f"\n--- Step 3 of 3: Cleaning up intermediate file ---")
-        mbtiles_path.unlink()
-        print(f"✅ Successfully deleted temporary file: '{mbtiles_path}'")
-    except OSError as e:
-        print(f"⚠️ Warning: Could not delete intermediate file '{mbtiles_path}'. Error: {e}")
+    # try:
+    #     print(f"\n--- Step 3 of 3: Cleaning up intermediate file ---")
+    #     mbtiles_path.unlink()
+    #     print(f"✅ Successfully deleted temporary file: '{mbtiles_path}'")
+    # except OSError as e:
+    #     print(f"⚠️ Warning: Could not delete intermediate file '{mbtiles_path}'. Error: {e}")
 
     print("\n🎉 --- Vector Tile Generation Complete! --- 🎉")
     print(f"Your final, web-ready tile file is: {pmtiles_path}")
